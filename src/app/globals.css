@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  background-color: #0b1423;
+}
+
+body {
+  @apply bg-[#0b1423] text-brand-light font-sans antialiased;
+}
+
+a {
+  @apply text-brand-accent underline-offset-4 hover:text-brand-danger transition-colors;
+}
+
+.section-shell {
+  @apply w-full px-4 sm:px-8 lg:px-16 py-16 lg:py-24;
+}
+
+.glass-card {
+  @apply bg-white/5 border border-white/10 rounded-3xl backdrop-blur-lg;
+}
+
+.grid-overlay {
+  background-image:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
