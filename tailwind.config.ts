@@ -1,7 +1,7 @@
 import type { Config } from 'tailwindcss';
 
 const config: Config = {
-  darkMode: ['class'],
+  darkMode: 'class',
   content: ['./src/**/*.{ts,tsx}'],
   theme: {
     extend: {
@@ -15,8 +15,8 @@ const config: Config = {
         }
       },
       fontFamily: {
-        sans: ['var(--font-inter)'],
-        mono: ['var(--font-jetbrains)']
+        sans: ['Inter', 'system-ui', 'ui-sans-serif', 'sans-serif'],
+        mono: ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'monospace']
       },
       boxShadow: {
         glow: '0 0 120px rgba(168, 218, 220, 0.25)'

@@ -2,25 +2,63 @@
 @tailwind components;
 @tailwind utilities;
 
+@theme {
+  --color-brand-danger: #e63946;
+  --color-brand-light: #f1faee;
+  --color-brand-accent: #a8dadc;
+  --color-brand-muted: #457b9d;
+  --color-brand-dark: #1d3557;
+}
+
 :root {
   color-scheme: dark;
   background-color: #0b1423;
 }
 
 body {
-  @apply bg-[#0b1423] text-brand-light font-sans antialiased;
+  background-color: #0b1423;
+  color: var(--color-brand-light);
+  font-family: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 a {
-  @apply text-brand-accent underline-offset-4 hover:text-brand-danger transition-colors;
+  color: var(--color-brand-accent);
+  text-underline-offset: 4px;
+  transition: color 150ms ease;
+}
+
+a:hover {
+  color: var(--color-brand-danger);
 }
 
 .section-shell {
-  @apply w-full px-4 sm:px-8 lg:px-16 py-16 lg:py-24;
+  width: 100%;
+  padding: 4rem 1rem;
+}
+
+@media (min-width: 640px) {
+  .section-shell {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-shell {
+    padding-left: 4rem;
+    padding-right: 4rem;
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
 }
 
 .glass-card {
-  @apply bg-white/5 border border-white/10 rounded-3xl backdrop-blur-lg;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1.5rem;
+  backdrop-filter: blur(24px);
 }
 
 .grid-overlay {

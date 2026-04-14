@@ -47,8 +47,8 @@ export function Hero() {
               </div>
             ))}
           </div>
-          <a href="#lab" className="inline-flex items-center gap-2 text-brand-accent text-sm">
-            Explore architecture lab
+          <a href="#telemetry" className="inline-flex items-center gap-2 text-brand-accent text-sm">
+            View build telemetry
             <ArrowUpRight className="h-4 w-4" />
           </a>
         </div>

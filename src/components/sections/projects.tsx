@@ -1,5 +1,5 @@
 import { projects } from '@/data/content';
-import { ArrowUpRight, Github } from 'lucide-react';
+import { ArrowUpRight, Code2 } from 'lucide-react';
 
 export function Projects() {
   return (
@@ -34,7 +34,7 @@ export function Projects() {
                   target="_blank"
                   className="px-4 py-2 rounded-full border border-brand-light/20 inline-flex items-center gap-2"
                 >
-                  <Github className="h-4 w-4" /> Repo
+                  <Code2 className="h-4 w-4" /> Repo
                 </a>
               </div>
             </div>
