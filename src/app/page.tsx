@@ -13,7 +13,9 @@ export default function HomePage() {
       <Skills />
       <Experience />
       <section className="section-shell" id="telemetry">
-        <CoffeeCounter />
+        <div className="section-inner">
+          <CoffeeCounter />
+        </div>
       </section>
       <Contact />
     </>

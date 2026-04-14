@@ -19,12 +19,18 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className="min-h-screen bg-[#0b1423] text-brand-light font-sans">
+      <body className="app-shell">
         <div className="relative min-h-screen overflow-hidden">
-          <div className="absolute inset-0 bg-radial-grid opacity-60 pointer-events-none" aria-hidden />
-          <Header />
-          <main className="relative z-10">{children}</main>
-          <Footer />
+          <div className="pointer-events-none absolute inset-0 opacity-70">
+            <div className="absolute -top-32 left-16 h-96 w-96 rounded-full bg-brand-accent/30 blur-3xl" />
+            <div className="absolute top-24 right-0 h-80 w-80 rounded-full bg-brand-danger/25 blur-[180px]" />
+            <div className="absolute bottom-0 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-brand-muted/20 blur-[150px]" />
+          </div>
+          <div className="relative z-10 flex min-h-screen flex-col">
+            <Header />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </div>
         </div>
       </body>
     </html>

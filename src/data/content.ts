@@ -41,6 +41,7 @@ export const skillBuckets = [
 export const projects = [
   {
     title: 'AstraStack Control Plane',
+    category: 'Developer Platform',
     description:
       'Unified developer platform with a Next.js dashboard, FastAPI services, and a GitOps control loop that keeps Kubernetes fleets and cloud costs in sync.',
     outcomes: [
@@ -54,6 +55,7 @@ export const projects = [
   },
   {
     title: 'Atlas RAG Copilot',
+    category: 'AI Assistant',
     description:
       'Retrieval-augmented assistant that chats over runbooks, architecture docs, and sprint notes directly on the portfolio.',
     outcomes: [
@@ -67,6 +69,7 @@ export const projects = [
   },
   {
     title: 'Observa CloudOps Kit',
+    category: 'CloudOps Toolkit',
     description:
       'Opinionated starter with Terraform modules, GitHub Actions workflow library, and dashboards to bootstrap SRE hygiene.',
     outcomes: [
