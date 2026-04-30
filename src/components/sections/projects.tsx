@@ -1,89 +1,88 @@
-import { projects } from '@/data/content';
-import { ArrowUpRight, Code2 } from 'lucide-react';
+'use client';
 
-const isPlaceholderLink = (href: string) => href.includes('example.com');
+import { motion } from 'framer-motion';
+import { ArrowUpRight, Code2 } from 'lucide-react';
+import { projects } from '@/data/content';
 
 export function Projects() {
   return (
-    <section className="section-shell bg-[#040815]" id="projects">
+    <section className="section-shell" id="projects">
       <div className="section-inner">
-        <div className="max-w-3xl space-y-4">
-          <p className="eyebrow">Case Studies</p>
-          <h2 className="text-3xl font-semibold sm:text-4xl">
-            End-to-end systems that blend product polish, AI brains, and hardened cloud delivery.
-          </h2>
-          <p className="muted">
-            Highlights from platforms where I owned architecture, AI integration, and operational excellence—from
-            developer control planes to production copilots.
+        <div className="mb-12 max-w-3xl">
+          <span className="section-kicker">Projects</span>
+          <h2 className="mt-4 text-3xl font-semibold sm:text-4xl lg:text-5xl">Selected AI + cloud systems</h2>
+          <p className="mt-4 text-base leading-8 text-white/70 sm:text-lg">
+            A few builds that show how I connect frontend systems, AI workflows, and cloud delivery into production-ready products.
           </p>
         </div>
-        <div className="mt-12 space-y-14">
-          {projects.map((project, index) => {
-            const liveIsPlaceholder = isPlaceholderLink(project.live);
-            return (
-              <article
-                key={project.title}
-                className="grid gap-8 lg:grid-cols-[minmax(0,0.55fr)_minmax(0,0.45fr)] lg:items-stretch"
-              >
-                <div className="surface-panel p-6">
-                  <div className="project-preview mb-6">
-                    <div className="text-xs uppercase tracking-[0.4em] text-brand-light/70">
-                      {project.category ?? 'Case Study'}
-                    </div>
-                    <div className="mt-6 text-3xl font-semibold text-brand-light">{project.title}</div>
-                    <p className="mt-4 text-sm text-brand-light/75">{project.description}</p>
+
+        <div className="space-y-6">
+          {projects.map((project, index) => (
+            <motion.article
+              key={project.title}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-70px' }}
+              transition={{ duration: 0.45, delay: index * 0.05 }}
+              className="glass-card overflow-hidden p-6 sm:p-8"
+            >
+              <div className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-start">
+                <div className="space-y-5">
+                  <div className="space-y-2">
+                    <p className="mono text-xs uppercase tracking-[0.18em] text-brand-accent">{project.category}</p>
+                    <h3 className="text-2xl font-semibold sm:text-3xl">{project.title}</h3>
+                    <p className="text-base leading-8 text-white/72">{project.description}</p>
                   </div>
-                  <div className="space-y-4 rounded-2xl border border-white/5 bg-white/5 p-5">
-                    <p className="text-xs uppercase tracking-[0.3em] text-brand-light/60">Stack</p>
+
+                  <div className="flex flex-wrap gap-3">
+                    <a
+                      href={project.live}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex min-h-11 items-center gap-2 rounded-full bg-brand-danger px-5 py-3 text-sm font-semibold text-brand-light transition hover:bg-[#ff4b58]"
+                    >
+                      Live
+                      <ArrowUpRight className="h-4 w-4" />
+                    </a>
+                    <a
+                      href={project.repo}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex min-h-11 items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm font-medium text-brand-light transition hover:border-brand-accent/40 hover:bg-white/10"
+                    >
+                      Repo
+                      <Code2 className="h-4 w-4" />
+                    </a>
+                  </div>
+                </div>
+
+                <div className="space-y-6">
+                  <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
+                    <p className="mono text-xs uppercase tracking-[0.18em] text-brand-accent">Outcomes</p>
+                    <ul className="mt-4 space-y-3">
+                      {project.outcomes.map((outcome) => (
+                        <li key={outcome} className="flex gap-3 text-sm leading-7 text-white/72">
+                          <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-brand-danger" />
+                          <span>{outcome}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div>
+                    <p className="mono mb-3 text-xs uppercase tracking-[0.18em] text-brand-accent">Stack</p>
                     <div className="flex flex-wrap gap-2">
                       {project.tech.map((tech) => (
-                        <span key={tech} className="rounded-full border border-white/10 px-3 py-1 text-xs text-brand-light/80">
+                        <span key={tech} className="tag-pill">
                           {tech}
                         </span>
                       ))}
                     </div>
                   </div>
                 </div>
-                <div className="surface-card flex flex-col gap-6 p-8">
-                  <div>
-                    <p className="text-sm font-semibold text-brand-light">{project.title}</p>
-                    <p className="muted mt-2">{project.description}</p>
-                  </div>
-                  <ul className="space-y-4 text-sm text-brand-light/85">
-                    {project.outcomes.map((item) => (
-                      <li key={item} className="flex gap-3">
-                        <span className="mt-1 h-2 w-2 rounded-full bg-brand-danger" />
-                        <p>{item}</p>
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="divider-gradient" />
-                  <div className="flex flex-wrap gap-3 text-sm">
-                    {liveIsPlaceholder ? (
-                      <span className="rounded-full border border-white/15 px-4 py-2 text-brand-light/80">
-                        Private demo on request
-                      </span>
-                    ) : (
-                      <a
-                        href={project.live}
-                        target="_blank"
-                        className="inline-flex items-center gap-2 rounded-full bg-brand-danger/80 px-4 py-2 text-white transition hover:bg-brand-danger"
-                      >
-                        View live <ArrowUpRight className="h-4 w-4" />
-                      </a>
-                    )}
-                    <a
-                      href={project.repo}
-                      target="_blank"
-                      className="inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-brand-light/80 transition hover:border-white/40 hover:text-brand-light"
-                    >
-                      <Code2 className="h-4 w-4" /> Repo
-                    </a>
-                  </div>
-                </div>
-              </article>
-            );
-          })}
+              </div>
+            </motion.article>
+          ))}
         </div>
       </div>
     </section>

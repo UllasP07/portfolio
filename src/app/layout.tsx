@@ -4,13 +4,13 @@ import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 
 export const metadata: Metadata = {
-  title: 'Ullas Puttaiah — Software, AI & Cloud Engineer',
+  title: 'Ullas Puttaiah | AI + Cloud Engineer',
   description:
-    'Modular portfolio showcasing Ullas Puttaiah’s end-to-end engineering work across full stack, AI, and multi-cloud DevOps.',
+    'Production-grade developer portfolio showcasing AI engineering, full-stack systems, cloud infrastructure, and DevOps delivery.',
   openGraph: {
-    title: 'Ullas Puttaiah — Software, AI & Cloud Engineer',
+    title: 'Ullas Puttaiah | AI + Cloud Engineer',
     description:
-      'Multi-device ready portfolio featuring mega-projects, an interactive coffee counter, and a RAG-powered assistant.',
+      'Dark glassmorphism portfolio with modular sections, DevOps storytelling, and interactive telemetry.',
     url: 'https://ullas.dev',
     siteName: 'Ullas Portfolio'
   }
@@ -19,14 +19,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className="app-shell">
-        <div className="relative min-h-screen overflow-hidden">
-          <div className="pointer-events-none absolute inset-0 opacity-70">
-            <div className="absolute -top-32 left-16 h-96 w-96 rounded-full bg-brand-accent/30 blur-3xl" />
-            <div className="absolute top-24 right-0 h-80 w-80 rounded-full bg-brand-danger/25 blur-[180px]" />
-            <div className="absolute bottom-0 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-brand-muted/20 blur-[150px]" />
-          </div>
-          <div className="relative z-10 flex min-h-screen flex-col">
+      <body>
+        <div className="app-shell">
+          <div className="pointer-events-none fixed inset-0 z-0 bg-[radial-gradient(circle_at_top,rgba(230,57,70,0.12),transparent_36%),radial-gradient(circle_at_bottom_right,rgba(168,218,220,0.1),transparent_28%)]" />
+          <div className="content-layer flex min-h-screen flex-col">
             <Header />
             <main className="flex-1">{children}</main>
             <Footer />

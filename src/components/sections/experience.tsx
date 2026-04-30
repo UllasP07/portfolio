@@ -1,49 +1,50 @@
+'use client';
+
+import { motion } from 'framer-motion';
 import { experience } from '@/data/content';
 
 export function Experience() {
   return (
-    <section className="section-shell bg-[#030814]" id="experience">
+    <section className="section-shell" id="experience">
       <div className="section-inner">
-        <div className="space-y-4">
-          <p className="eyebrow">Experience</p>
-          <h2 className="text-3xl font-semibold sm:text-4xl">A narrative through platform, AI, and SRE mandates.</h2>
-          <p className="muted max-w-3xl">
-            I thrive in roles that expect engineers to bridge strategy with hands-on execution. Each stop below involved
-            leading multi-disciplinary teams across UX, infra, and AI.
+        <div className="mb-12 max-w-3xl">
+          <span className="section-kicker">Experience</span>
+          <h2 className="mt-4 text-3xl font-semibold sm:text-4xl lg:text-5xl">A timeline of shipped systems</h2>
+          <p className="mt-4 text-base leading-8 text-white/70 sm:text-lg">
+            I focus on work that improves developer velocity, strengthens reliability, and makes AI features easier to run in production.
           </p>
         </div>
-        <div className="relative mt-12">
-          <div className="timeline-line hidden md:block" />
-          <div className="space-y-10">
-            {experience.map((exp) => (
-              <article key={exp.company} className="relative grid gap-6 md:grid-cols-[180px_1fr]">
-                <div className="flex items-start gap-4 md:flex-col md:items-stretch">
-                  <div className="hidden md:block">
-                    <span className="timeline-dot" />
-                  </div>
+
+        <div className="relative pl-6 sm:pl-8">
+          <div className="absolute bottom-0 left-2 top-0 w-px bg-gradient-to-b from-brand-accent/50 via-white/10 to-transparent sm:left-3" />
+          <div className="space-y-6">
+            {experience.map((item, index) => (
+              <motion.article
+                key={item.company}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-60px' }}
+                transition={{ duration: 0.4, delay: index * 0.06 }}
+                className="glass-card relative p-6 sm:p-7"
+              >
+                <span className="absolute -left-[1.95rem] top-8 h-3.5 w-3.5 rounded-full border-4 border-[#0b1423] bg-brand-danger sm:-left-[2.45rem]" />
+                <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                   <div>
-                    <p className="text-xs uppercase tracking-[0.4em] text-brand-light/60">{exp.period}</p>
-                    <p className="text-sm font-semibold text-brand-light mt-1 md:mt-4">{exp.company}</p>
+                    <p className="text-xl font-semibold text-brand-light">{item.role}</p>
+                    <p className="mt-1 text-sm font-medium text-brand-accent">{item.company}</p>
                   </div>
+                  <span className="mono text-xs uppercase tracking-[0.18em] text-white/55">{item.period}</span>
                 </div>
-                <div className="surface-card p-6">
-                  <div className="flex flex-wrap items-center justify-between gap-4">
-                    <div>
-                      <p className="text-lg font-semibold">{exp.role}</p>
-                      <p className="text-sm text-brand-light/70">{exp.company}</p>
-                    </div>
-                    <p className="text-xs uppercase tracking-[0.3em] text-brand-light/60 md:hidden">{exp.period}</p>
-                  </div>
-                  <ul className="mt-5 space-y-3 text-sm text-brand-light/85">
-                    {exp.bullets.map((bullet) => (
-                      <li key={bullet} className="flex gap-3">
-                        <span className="mt-1 h-1.5 w-1.5 rounded-full bg-brand-accent" />
-                        <p>{bullet}</p>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </article>
+
+                <ul className="space-y-3">
+                  {item.bullets.map((bullet) => (
+                    <li key={bullet} className="flex gap-3 text-sm leading-7 text-white/72">
+                      <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-brand-accent" />
+                      <span>{bullet}</span>
+                    </li>
+                  ))}
+                </ul>
+              </motion.article>
             ))}
           </div>
         </div>

@@ -1,14 +1,16 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 
 const GITHUB_USER = process.env.NEXT_PUBLIC_GITHUB_USERNAME ?? 'ullasp';
 const GH_SEARCH_ENDPOINT = `https://api.github.com/search/commits?q=author:${GITHUB_USER}+committer-date:>=`;
+const FALLBACK_COMMITS = 18;
+const FALLBACK_CUPS = 2;
 
 export function CoffeeCounter() {
-  const [commits, setCommits] = useState(24);
-  const [cups, setCups] = useState(3);
+  const [commits, setCommits] = useState(FALLBACK_COMMITS);
+  const [cups, setCups] = useState(FALLBACK_CUPS);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -18,22 +20,19 @@ export function CoffeeCounter() {
     since.setDate(since.getDate() - 1);
 
     fetch(`${GH_SEARCH_ENDPOINT}${since.toISOString().split('T')[0]}`, {
-      headers: {
-        Accept: 'application/vnd.github.text-match+json'
-      },
+      headers: { Accept: 'application/vnd.github+json' },
       signal: abort.signal
     })
-      .then((res) => {
-        if (!res.ok) throw new Error('Unable to load commits');
-        return res.json();
+      .then((response) => {
+        if (!response.ok) throw new Error('Unable to load commits');
+        return response.json();
       })
       .then((payload) => {
         if (typeof payload.total_count === 'number') {
           setCommits(payload.total_count);
         }
       })
-      .catch((err) => {
-        console.warn(err);
+      .catch(() => {
         setError('Live GitHub data unavailable right now. Showing sample numbers.');
       })
       .finally(() => setLoading(false));
@@ -41,78 +40,93 @@ export function CoffeeCounter() {
     return () => abort.abort();
   }, []);
 
-  const predictiveCups = useMemo(() => Math.ceil(commits / 6), [commits]);
-  const fill = Math.min(100, ((cups ?? 1) / 8) * 100);
+  const predictedCups = Math.ceil(commits / 6);
+  const fill = Math.min(100, (cups / 8) * 100);
+  const ripples = Array.from({ length: Math.min(cups, 6) }, (_, index) => index);
 
   return (
-    <div className="surface-panel grid gap-10 p-8 lg:grid-cols-[1fr_0.8fr]">
+    <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:gap-10">
       <div className="space-y-5">
-        <p className="eyebrow">Telemetry</p>
-        <h3 className="text-2xl font-semibold text-brand-light">Shipping dashboard, powered by caffeine.</h3>
-        <p className="muted">
-          GitHub commit feed + caffeine telemetry. Numbers refresh daily and estimate the fuel required to land the next
-          release window.
+        <span className="section-kicker">Telemetry</span>
+        <h2 className="text-3xl font-semibold sm:text-4xl lg:text-5xl">Coffee + commit counter</h2>
+        <p className="max-w-xl text-base leading-8 text-white/70 sm:text-lg">
+          A lightweight telemetry block that estimates caffeine intake from the last 24 hours of GitHub activity and lets you bump the cups manually.
         </p>
-        <div className="grid gap-4 sm:grid-cols-3">
-          <MetricCard label="Commits (24h)" value={loading ? '—' : commits} />
-          <MetricCard label="Cups logged" value={cups} />
-          <MetricCard label="Predicted cups" value={predictiveCups} accent />
-        </div>
-        <button
-          onClick={() => setCups((prev) => Math.min(prev + 1, 8))}
-          className="inline-flex items-center justify-center rounded-full bg-brand-danger px-5 py-2 font-semibold text-white transition hover:scale-[1.02]"
-        >
-          + Add Coffee
-        </button>
-        {error && <p className="text-xs text-brand-light/60">{error}</p>}
+        <p className="text-sm text-white/55">{error ?? 'Commit count is fetched from GitHub search and refreshed on load.'}</p>
       </div>
-      <div className="relative flex items-center justify-center">
-        <div className="absolute inset-0 rounded-3xl border border-white/5 bg-gradient-to-b from-white/5 to-transparent" />
-        <div className="relative h-72 w-56 rounded-[36px] border border-white/10 bg-[#090f1d] p-6">
-          <div className="text-center text-xs uppercase tracking-[0.4em] text-brand-light/60">Caffeine level</div>
-          <div className="mt-4 flex justify-center">
-            <div className="relative h-44 w-24 rounded-[30px] border border-white/15 bg-white/5">
+
+      <div className="glass-card grid gap-6 p-6 sm:p-8 md:grid-cols-[1fr_0.9fr]">
+        <div className="space-y-5">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+            <MetricCard label="Commits" value={loading ? '...' : String(commits)} />
+            <MetricCard label="Cups" value={String(cups)} />
+            <MetricCard label="Predicted cups" value={String(predictedCups)} accent />
+          </div>
+
+          <button
+            onClick={() => setCups((value) => value + 1)}
+            className="inline-flex min-h-11 items-center rounded-full bg-brand-danger px-5 py-3 text-sm font-semibold text-brand-light transition hover:bg-[#ff4b58]"
+          >
+            + Add Coffee
+          </button>
+
+          <div className="rounded-3xl border border-white/10 bg-white/5 p-4">
+            <p className="mono text-xs uppercase tracking-[0.18em] text-brand-accent">Telemetry note</p>
+            <p className="mt-3 text-sm leading-7 text-white/68">
+              Predicted cups are calculated as <span className="mono">ceil(commits / 6)</span>, while the counter on the left stays manually adjustable.
+            </p>
+          </div>
+        </div>
+
+        <div className="flex items-center justify-center">
+          <div className="relative flex h-72 w-full max-w-[220px] items-end justify-center rounded-[2rem] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.02))] p-5">
+            <div className="absolute inset-x-6 top-6 h-8 rounded-full bg-white/5 blur-xl" />
+            <div className="relative h-full w-24 overflow-hidden rounded-[999px] border border-white/10 bg-[#0f1a2c]">
               <motion.div
-                className="absolute bottom-0 left-0 right-0 rounded-b-[30px] bg-gradient-to-b from-brand-danger to-brand-dark"
+                className="absolute inset-x-0 bottom-0 rounded-b-[999px] bg-[linear-gradient(180deg,#a8dadc_0%,#e63946_100%)]"
                 animate={{ height: `${fill}%` }}
-                transition={{ type: 'spring', stiffness: 120, damping: 24 }}
+                transition={{ type: 'spring', stiffness: 110, damping: 16 }}
               />
-              <div className="absolute inset-0 flex flex-col justify-between py-3">
+
+              {ripples.map((ripple) => (
                 <motion.span
-                  className="mx-4 h-1 rounded-full bg-white/30"
-                  animate={{ scaleX: [1, 0.7, 1] }}
-                  transition={{ duration: 3, repeat: Infinity }}
+                  key={ripple}
+                  className="absolute left-1/2 top-[18%] h-16 w-16 -translate-x-1/2 rounded-full border border-white/20"
+                  initial={{ opacity: 0.25, scale: 0.3 }}
+                  animate={{ opacity: 0, scale: 1.9 }}
+                  transition={{
+                    duration: 2.1,
+                    repeat: Infinity,
+                    ease: 'easeOut',
+                    delay: ripple * 0.28
+                  }}
                 />
-                <motion.span
-                  className="mx-6 h-1 rounded-full bg-white/10"
-                  animate={{ scaleX: [1, 1.2, 1] }}
-                  transition={{ duration: 4, repeat: Infinity, delay: 0.6 }}
-                />
+              ))}
+
+              <div className="absolute inset-x-2 top-3 rounded-full border border-white/10 px-2 py-1 text-center">
+                <span className="mono text-[10px] uppercase tracking-[0.16em] text-white/55">cups</span>
               </div>
             </div>
           </div>
-          <p className="mt-6 text-center text-xs text-brand-light/70">Auto-adjusts with each commit surge.</p>
         </div>
       </div>
     </div>
   );
 }
 
-type MetricProps = {
-  label: string;
-  value: string | number;
-  accent?: boolean;
-};
-
-function MetricCard({ label, value, accent }: MetricProps) {
+function MetricCard({ label, value, accent }: { label: string; value: string; accent?: boolean }) {
   return (
     <div
-      className={`rounded-2xl border px-4 py-3 text-center ${
-        accent ? 'border-brand-danger/50 bg-brand-danger/10 text-brand-danger' : 'border-white/10 bg-white/5'
+      className={`rounded-3xl border px-4 py-4 text-center ${
+        accent
+          ? 'border-brand-danger/35 bg-brand-danger/10'
+          : 'border-white/10 bg-white/5'
       }`}
     >
-      <p className="text-xs uppercase tracking-[0.4em] text-brand-light/60">{label}</p>
-      <p className="text-3xl font-semibold">{value}</p>
+      <div className="mono text-[10px] uppercase tracking-[0.18em] text-white/55">{label}</div>
+      <div className={`mt-2 text-3xl font-bold ${accent ? 'text-brand-accent' : 'text-brand-light'}`}>
+        {value}
+      </div>
     </div>
   );
 }

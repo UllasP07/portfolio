@@ -1,49 +1,59 @@
-import { contactLinks, heroContent } from '@/data/content';
+'use client';
+
+import { motion } from 'framer-motion';
+import { AtSign, BriefcaseBusiness, Code2 } from 'lucide-react';
+import { contactLinks } from '@/data/content';
+
+const socialIcons = {
+  GitHub: Code2,
+  LinkedIn: BriefcaseBusiness,
+  Email: AtSign
+};
 
 export function Contact() {
-  const resumeIsPlaceholder = heroContent.resume.includes('example.com');
-  const resumeHref = resumeIsPlaceholder ? 'mailto:hello@ullas.dev?subject=Resume request' : heroContent.resume;
-  const resumeLabel = resumeIsPlaceholder ? 'Request resume' : 'Download resume';
-
   return (
     <section className="section-shell" id="contact">
       <div className="section-inner">
-        <div className="surface-accent p-10 text-white">
-          <div className="grid gap-10 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
-            <div className="space-y-5">
-              <p className="eyebrow text-white/80">Let’s build</p>
-              <h2 className="text-3xl font-semibold sm:text-4xl">Ready to lead your next AI + cloud initiative.</h2>
-              <p className="text-white/80">
-                Partner with me for staff-level engineering leadership across product UX, AI copilots, and multi-cloud
-                delivery. I’m available for full-time roles and senior consulting engagements.
-              </p>
-              <div className="flex flex-wrap gap-4">
-                <a
-                  href="mailto:hello@ullas.dev?subject=Let’s build together"
-                  className="rounded-full bg-black/20 px-6 py-3 font-semibold text-white backdrop-blur-sm transition hover:bg-black/30"
-                >
-                  Send an email
-                </a>
-                <a
-                  href={resumeHref}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="rounded-full border border-white/40 px-6 py-3 text-white/90 transition hover:bg-white/10"
-                >
-                  {resumeLabel}
-                </a>
-              </div>
-            </div>
-            <div className="grid gap-4 rounded-3xl bg-black/20 p-6 text-sm backdrop-blur">
-              {contactLinks.map((link) => (
-                <a key={link.label} href={link.href} className="rounded-2xl border border-white/15 p-4 transition hover:border-white/40">
-                  <p className="text-xs uppercase tracking-[0.3em] text-white/60">{link.label}</p>
-                  <p className="mt-1 text-lg font-semibold text-white">{link.value}</p>
-                </a>
-              ))}
-            </div>
-          </div>
+        <div className="mb-12 max-w-3xl">
+          <span className="section-kicker">Contact</span>
+          <h2 className="mt-4 text-3xl font-semibold sm:text-4xl lg:text-5xl">Let&apos;s build something reliable</h2>
+          <p className="mt-4 text-base leading-8 text-white/70 sm:text-lg">
+            If you&apos;re hiring for AI, full-stack, or cloud platform work, I&apos;m happy to connect and talk through the problem space.
+          </p>
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.35 }}
+          className="grid gap-4 [grid-template-columns:repeat(auto-fit,minmax(220px,1fr))]"
+        >
+          {contactLinks.map((link) => {
+            const Icon = socialIcons[link.label as keyof typeof socialIcons];
+            if (!Icon) return null;
+
+            return (
+              <a
+                key={link.label}
+                href={link.href}
+                target={link.href.startsWith('http') ? '_blank' : undefined}
+                rel={link.href.startsWith('http') ? 'noreferrer' : undefined}
+                className="glass-card group p-6 transition hover:-translate-y-1 hover:border-brand-accent/20 hover:bg-white/[0.07]"
+              >
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <p className="mono text-xs uppercase tracking-[0.18em] text-brand-accent">{link.label}</p>
+                    <p className="mt-3 text-lg font-semibold text-brand-light">{link.value}</p>
+                  </div>
+                  <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-brand-light transition group-hover:border-brand-accent/40 group-hover:text-brand-accent">
+                    <Icon className="h-5 w-5" />
+                  </div>
+                </div>
+              </a>
+            );
+          })}
+        </motion.div>
       </div>
     </section>
   );

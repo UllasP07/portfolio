@@ -18,11 +18,11 @@ const config: Config = {
         sans: ['Inter', 'system-ui', 'ui-sans-serif', 'sans-serif'],
         mono: ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'monospace']
       },
-      boxShadow: {
-        glow: '0 0 120px rgba(168, 218, 220, 0.25)'
-      },
       backgroundImage: {
-        'radial-grid': 'radial-gradient(circle at top, rgba(230, 57, 70, 0.15), transparent 45%), radial-gradient(circle at 20% 20%, rgba(168, 218, 220, 0.08), transparent 40%)'
+        'grid-overlay':
+          'linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)',
+        'radial-grid':
+          'radial-gradient(circle at top, rgba(230, 57, 70, 0.15), transparent 45%), radial-gradient(circle at 20% 20%, rgba(168, 218, 220, 0.08), transparent 40%)'
       }
     }
   },

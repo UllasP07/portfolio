@@ -1,96 +1,78 @@
-import { heroContent, stats } from '@/data/content';
-import { ArrowUpRight, ShieldCheck, Sparkles } from 'lucide-react';
+'use client';
 
-const focusAreas = ['AI copilots', 'Developer platforms', 'Cloud & DevOps automation'];
-const trustSignals = ['Azure', 'AWS', 'GCP', 'LangChain'];
+import { motion } from 'framer-motion';
+import { ArrowRight, CalendarDays, Download } from 'lucide-react';
+import { heroContent, stats } from '@/data/content';
 
 export function Hero() {
-  const resumeIsPlaceholder = heroContent.resume.includes('example.com');
-  const resumeHref = resumeIsPlaceholder ? 'mailto:hello@ullas.dev?subject=Resume request' : heroContent.resume;
-  const resumeLabel = resumeIsPlaceholder ? 'Request resume' : heroContent.secondaryCta;
-
   return (
-    <section className="section-shell pt-20" id="hero">
-      <div className="section-inner relative overflow-hidden rounded-[36px] border border-white/5 bg-gradient-to-b from-[#0e1628] via-[#060c18] to-[#050910] p-10 shadow-[0_40px_120px_rgba(5,9,16,0.9)]">
-        <div className="pointer-events-none absolute -top-24 left-1/2 h-64 w-64 -translate-x-1/2 rounded-full bg-brand-accent/20 blur-[160px]" />
-        <div className="grid gap-14 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.8fr)]">
-          <div className="space-y-8">
-            <p className="eyebrow">Software · AI · Cloud</p>
+    <section className="section-shell pb-20 pt-12 sm:pt-16 lg:pt-20" id="hero">
+      <div className="section-inner">
+        <div className="grid items-center gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-12">
+          <motion.div
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="space-y-7"
+          >
+            <span className="section-kicker">{heroContent.eyebrow}</span>
             <div className="space-y-5">
-              <h1 className="text-4xl leading-tight text-brand-light sm:text-5xl lg:text-6xl">
-                {heroContent.headline}{' '}
-                <span className="text-transparent bg-gradient-to-r from-brand-accent to-brand-danger bg-clip-text">
-                  with production rigor.
-                </span>
+              <h1 className="max-w-3xl text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
+                {heroContent.headline}
               </h1>
-              <p className="muted max-w-2xl text-lg">{heroContent.summary}</p>
-            </div>
-            <div className="flex flex-wrap gap-3">
-              {focusAreas.map((focus) => (
-                <span
-                  key={focus}
-                  className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-brand-light/80"
-                >
-                  {focus}
-                </span>
-              ))}
+              <p className="max-w-2xl text-base leading-8 text-white/75 sm:text-lg">{heroContent.summary}</p>
             </div>
             <div className="flex flex-wrap gap-4">
               <a
                 href="#projects"
-                className="inline-flex items-center gap-2 rounded-full bg-brand-danger px-6 py-3 text-base font-semibold text-white shadow-[0_10px_40px_rgba(230,57,70,0.4)] transition hover:scale-[1.03]"
+                className="inline-flex min-h-11 items-center gap-2 rounded-full bg-brand-danger px-6 py-3 text-sm font-semibold text-brand-light transition hover:bg-[#ff4b58]"
               >
-                {heroContent.primaryCta} <ArrowUpRight className="h-4 w-4" />
+                {heroContent.primaryCta}
+                <ArrowRight className="h-4 w-4" />
               </a>
               <a
-                href={resumeHref}
+                href={heroContent.resumeHref}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 rounded-full border border-white/20 px-6 py-3 text-base text-brand-light/80 transition hover:border-white/60 hover:text-brand-light"
+                className="inline-flex min-h-11 items-center gap-2 rounded-full border border-white/10 bg-white/5 px-6 py-3 text-sm font-medium text-brand-light transition hover:border-brand-accent/40 hover:bg-white/10"
               >
-                {resumeLabel}
+                <Download className="h-4 w-4" />
+                {heroContent.secondaryCta}
+              </a>
+              <a
+                href={heroContent.bookCallHref}
+                className="inline-flex min-h-11 items-center gap-2 rounded-full border border-brand-muted/40 px-6 py-3 text-sm font-medium text-brand-accent transition hover:bg-brand-muted/10"
+              >
+                <CalendarDays className="h-4 w-4" />
+                Book a Call
               </a>
             </div>
-            <div className="flex flex-wrap gap-8 text-sm text-brand-light/70">
-              <div className="flex items-center gap-3">
-                <ShieldCheck className="h-5 w-5 text-brand-accent" />
-                <span>Available for Staff+ platform + AI roles</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <Sparkles className="h-5 w-5 text-brand-danger" />
-                <span>Hands-on with delivery, ops, and narrative</span>
-              </div>
-            </div>
-          </div>
+          </motion.div>
 
-          <div className="surface-panel relative overflow-hidden p-8 text-sm">
-            <div className="mb-8 flex items-center justify-between text-xs uppercase tracking-[0.3em] text-brand-light/60">
-              <span>Signal Board</span>
-              <span>24h pulse</span>
-            </div>
-            <div className="grid gap-6">
-              {stats.map((stat) => (
-                <div key={stat.label} className="rounded-2xl border border-white/5 bg-white/5 p-4">
-                  <p className="text-xs uppercase tracking-[0.4em] text-brand-light/60">{stat.label}</p>
-                  <div className="mt-2 flex items-end justify-between">
-                    <span className="text-4xl font-semibold text-brand-light">{stat.value}</span>
-                    <span className="text-right text-xs text-brand-light/60">{stat.detail}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div className="divider-gradient my-8" />
-            <div className="grid gap-4">
-              <p className="text-xs uppercase tracking-[0.4em] text-brand-light/60">Built with</p>
-              <div className="flex flex-wrap gap-3 text-sm text-brand-light/80">
-                {trustSignals.map((signal) => (
-                  <div key={signal} className="rounded-full border border-white/10 px-4 py-2">
-                    {signal}
+          <motion.aside
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.12, duration: 0.55 }}
+            className="glass-card relative overflow-hidden p-6 sm:p-8"
+          >
+            <div className="absolute inset-x-0 top-0 h-32 bg-[radial-gradient(circle_at_top,rgba(230,57,70,0.26),transparent_68%)]" />
+            <div className="relative space-y-6">
+              <div>
+                <p className="mono text-xs uppercase tracking-[0.2em] text-brand-accent">Telemetry snapshot</p>
+                <h2 className="mt-3 text-2xl font-semibold sm:text-3xl">Engineering impact at a glance</h2>
+              </div>
+
+              <div className="grid gap-4">
+                {stats.map((stat) => (
+                  <div key={stat.label} className="rounded-3xl border border-white/10 bg-white/5 p-5">
+                    <div className="text-3xl font-bold text-brand-light">{stat.value}</div>
+                    <div className="mt-2 text-sm font-medium text-brand-light">{stat.label}</div>
+                    <div className="mt-1 text-sm leading-6 text-white/65">{stat.detail}</div>
                   </div>
                 ))}
               </div>
             </div>
-          </div>
+          </motion.aside>
         </div>
       </div>
     </section>
