@@ -7,26 +7,24 @@ const config: Config = {
     extend: {
       colors: {
         brand: {
-          danger: '#e63946',
-          light: '#f1faee',
-          accent: '#a8dadc',
-          muted: '#457b9d',
-          dark: '#1d3557'
-        }
+          red:      '#ef233c',
+          'red-dark': '#d90429',
+          indigo:   '#2b2d42',
+          lavender: '#8d99ae',
+          platinum: '#edf2f4',
+        },
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'ui-sans-serif', 'sans-serif'],
-        mono: ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'monospace']
+        display: ['Syne', 'system-ui', 'sans-serif'],
+        body:    ['DM Sans', 'system-ui', 'sans-serif'],
+        mono:    ['DM Mono', 'ui-monospace', 'monospace'],
       },
-      backgroundImage: {
-        'grid-overlay':
-          'linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)',
-        'radial-grid':
-          'radial-gradient(circle at top, rgba(230, 57, 70, 0.15), transparent 45%), radial-gradient(circle at 20% 20%, rgba(168, 218, 220, 0.08), transparent 40%)'
-      }
-    }
+      borderRadius: {
+        '4xl': '2rem',
+      },
+    },
   },
-  plugins: []
+  plugins: [],
 };
 
 export default config;

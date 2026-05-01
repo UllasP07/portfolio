@@ -6,69 +6,75 @@ import { heroContent, stats } from '@/data/content';
 
 export function Hero() {
   return (
-    <section className="section-shell pb-20 pt-12 sm:pt-16 lg:pt-20" id="hero">
+    <section className="section-shell" id="hero" style={{ paddingBottom: '5rem', paddingTop: '5rem' }}>
       <div className="section-inner">
-        <div className="grid items-center gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-12">
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 480px), 1fr))',
+          gap: '3rem',
+          alignItems: 'center',
+        }}>
+          {/* Left */}
           <motion.div
-            initial={{ opacity: 0, y: 14 }}
+            initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="space-y-7"
+            transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+            style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}
           >
-            <span className="section-kicker">{heroContent.eyebrow}</span>
-            <div className="space-y-5">
-              <h1 className="max-w-3xl text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
-                {heroContent.headline}
+            <span className="kicker">AI + Cloud Engineer</span>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.1rem' }}>
+              <h1 style={{ fontFamily: 'var(--font-syne)', fontSize: 'clamp(2.2rem, 5vw, 3.75rem)', fontWeight: 800, letterSpacing: '-0.04em', lineHeight: 1.08, maxWidth: '640px' }}>
+                Building{' '}
+                <em style={{ fontStyle: 'normal', color: 'var(--c-red)' }}>AI‑powered</em>
+                {' '}products with the cloud behind them.
               </h1>
-              <p className="max-w-2xl text-base leading-8 text-white/75 sm:text-lg">{heroContent.summary}</p>
+              <p style={{ fontSize: '1.05rem', lineHeight: 1.8, color: 'var(--text-2)', maxWidth: '520px' }}>
+                {heroContent.summary}
+              </p>
             </div>
-            <div className="flex flex-wrap gap-4">
-              <a
-                href="#projects"
-                className="inline-flex min-h-11 items-center gap-2 rounded-full bg-brand-danger px-6 py-3 text-sm font-semibold text-brand-light transition hover:bg-[#ff4b58]"
-              >
-                {heroContent.primaryCta}
-                <ArrowRight className="h-4 w-4" />
+
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem' }}>
+              <a href="#experience" className="btn-red">
+                View Work <ArrowRight style={{ width: 16, height: 16 }} />
               </a>
-              <a
-                href={heroContent.resumeHref}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex min-h-11 items-center gap-2 rounded-full border border-white/10 bg-white/5 px-6 py-3 text-sm font-medium text-brand-light transition hover:border-brand-accent/40 hover:bg-white/10"
-              >
-                <Download className="h-4 w-4" />
-                {heroContent.secondaryCta}
+              <a href={heroContent.resumeHref} target="_blank" rel="noreferrer" className="btn-ghost">
+                <Download style={{ width: 15, height: 15 }} /> Resume
               </a>
-              <a
-                href={heroContent.bookCallHref}
-                className="inline-flex min-h-11 items-center gap-2 rounded-full border border-brand-muted/40 px-6 py-3 text-sm font-medium text-brand-accent transition hover:bg-brand-muted/10"
-              >
-                <CalendarDays className="h-4 w-4" />
-                Book a Call
+              <a href={heroContent.bookCallHref} className="btn-ghost">
+                <CalendarDays style={{ width: 15, height: 15 }} /> Book a Call
               </a>
             </div>
           </motion.div>
 
+          {/* Right — stats card */}
           <motion.aside
-            initial={{ opacity: 0, x: 20 }}
+            initial={{ opacity: 0, x: 28 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.12, duration: 0.55 }}
-            className="glass-card relative overflow-hidden p-6 sm:p-8"
+            transition={{ delay: 0.15, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="glass-card"
+            style={{ position: 'relative', overflow: 'hidden', padding: '2rem' }}
           >
-            <div className="absolute inset-x-0 top-0 h-32 bg-[radial-gradient(circle_at_top,rgba(230,57,70,0.26),transparent_68%)]" />
-            <div className="relative space-y-6">
+            {/* glow */}
+            <div style={{ position: 'absolute', inset: '0 0 auto 0', height: '140px', background: 'radial-gradient(ellipse at top, rgba(239,35,60,0.2), transparent 72%)', pointerEvents: 'none' }} />
+            <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
               <div>
-                <p className="mono text-xs uppercase tracking-[0.2em] text-brand-accent">Telemetry snapshot</p>
-                <h2 className="mt-3 text-2xl font-semibold sm:text-3xl">Engineering impact at a glance</h2>
+                <p className="kicker" style={{ marginBottom: '0.6rem' }}>Telemetry snapshot</p>
+                <h2 style={{ fontFamily: 'var(--font-syne)', fontSize: '1.5rem', fontWeight: 700 }}>
+                  Engineering impact at a glance
+                </h2>
               </div>
-
-              <div className="grid gap-4">
-                {stats.map((stat) => (
-                  <div key={stat.label} className="rounded-3xl border border-white/10 bg-white/5 p-5">
-                    <div className="text-3xl font-bold text-brand-light">{stat.value}</div>
-                    <div className="mt-2 text-sm font-medium text-brand-light">{stat.label}</div>
-                    <div className="mt-1 text-sm leading-6 text-white/65">{stat.detail}</div>
-                  </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                {stats.map((stat, i) => (
+                  <motion.div key={stat.label}
+                    initial={{ opacity: 0, x: 14 }} animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.3 + i * 0.09, duration: 0.4 }}
+                    style={{ border: '1px solid var(--border)', background: 'rgba(255,255,255,0.04)', borderRadius: '1rem', padding: '1.1rem 1.25rem' }}
+                  >
+                    <div style={{ fontFamily: 'var(--font-syne)', fontSize: '2rem', fontWeight: 800, color: 'var(--text-1)', lineHeight: 1 }}>{stat.value}</div>
+                    <div style={{ fontSize: '0.875rem', fontWeight: 500, color: 'var(--text-1)', marginTop: '0.3rem' }}>{stat.label}</div>
+                    <div style={{ fontSize: '0.8rem', color: 'var(--text-3)', marginTop: '0.25rem', lineHeight: 1.55 }}>{stat.detail}</div>
+                  </motion.div>
                 ))}
               </div>
             </div>
